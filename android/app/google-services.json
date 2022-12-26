@@ -29,6 +29,13 @@
             {
               "client_id": "888316043573-o4c5fklvclm658p6m39q8h9fasdnsu02.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "888316043573-pdfhvtg0n82gu3vd06hdausnph68n3ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chaiShai"
+              }
             }
           ]
         }
