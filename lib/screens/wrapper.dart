@@ -1,5 +1,6 @@
 import 'package:chai_shai/screens/authenticate/authenticate.dart';
 import 'package:chai_shai/screens/home/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
@@ -15,11 +16,11 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    const loggedInUser = Provider.of<LoggedInUser>;
-    if (kDebugMode) {
-      print(loggedInUser);
-    }
 
-    return const Authenticate();
+    if (Provider.of<LoggedInUser?>(context) == null) {
+      return const Authenticate();
+    } else {
+      return const Home();
+    }
   }
 }

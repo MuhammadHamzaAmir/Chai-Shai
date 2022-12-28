@@ -2,9 +2,8 @@
 
 class LoggedInUser{
 
-  late final String uid;
+  final String uid;
 
   LoggedInUser({required this.uid});
-
 
 }

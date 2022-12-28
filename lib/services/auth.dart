@@ -27,4 +27,16 @@ class AuthService {
       return null;
     }
   }
+
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+      return null;
+    }
+  }
+
 }
