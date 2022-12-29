@@ -1,18 +1,16 @@
-
-import 'package:chai_shai/services/auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
+import 'package:chai_shai/services/auth.dart';
 
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
 
@@ -26,7 +24,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: const Text("Sign in to Chai Shai"),
+        title: const Text("Register to Chai Shai"),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
@@ -61,7 +59,7 @@ class _SignInState extends State<SignIn> {
                   backgroundColor: Colors.pink[400],
                 ),
                 child: const Text(
-                  "Sign In",
+                  "Register",
                   style: TextStyle(color: Colors.white),
                 ),
               ),

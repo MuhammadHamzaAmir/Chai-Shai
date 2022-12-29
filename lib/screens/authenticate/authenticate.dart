@@ -1,3 +1,4 @@
+import 'package:chai_shai/screens/authenticate/register.dart';
 import 'package:chai_shai/screens/authenticate/signIn.dart';
 import "package:flutter/material.dart";
 
@@ -12,8 +13,6 @@ class Authenticate extends StatefulWidget {
 class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const SignIn(),
-    );
+    return const Register();
   }
 }
