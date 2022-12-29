@@ -4,7 +4,8 @@ import 'package:chai_shai/services/auth.dart';
 
 
 class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
+  final Function toggleView;
+  const Register({Key? key, required this.toggleView}) : super(key: key);
 
   @override
   State<Register> createState() => _RegisterState();
@@ -25,6 +26,15 @@ class _RegisterState extends State<Register> {
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
         title: const Text("Register to Chai Shai"),
+        actions:<Widget>[
+          TextButton.icon(
+            onPressed: () async {
+              widget.toggleView();
+            },
+            icon: const Icon(Icons.person),
+            label: const Text("Sign In"),
+          ),
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
