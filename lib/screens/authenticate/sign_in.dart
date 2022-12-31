@@ -1,13 +1,11 @@
-
 import 'package:chai_shai/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 
-
 class SignIn extends StatefulWidget {
-
   final Function toggleView;
+
   const SignIn({Key? key, required this.toggleView}) : super(key: key);
 
   @override
@@ -15,11 +13,12 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   String email = '';
   String password = '';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class _SignInState extends State<SignIn> {
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
         title: const Text("Sign in to Chai Shai"),
-        actions:<Widget>[
+        actions: <Widget>[
           TextButton.icon(
             onPressed: () async {
               widget.toggleView();
@@ -42,10 +41,12 @@ class _SignInState extends State<SignIn> {
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               const SizedBox(height: 20.0),
               TextFormField(
+                validator: (val) => val!.isEmpty ? 'Enter an email' : null,
                 onChanged: (val) {
                   setState(() {
                     email = val;
@@ -54,6 +55,9 @@ class _SignInState extends State<SignIn> {
               ),
               const SizedBox(height: 20.0),
               TextFormField(
+                validator: (val) => val!.length < 6
+                    ? 'Enter password with +6 characters'
+                    : null,
                 obscureText: true,
                 onChanged: (val) {
                   setState(() {
@@ -64,8 +68,11 @@ class _SignInState extends State<SignIn> {
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () async {
-                  if (kDebugMode) {
-                    print("email: $email password: $password");
+                  if (_formKey.currentState!.validate()) {
+                    dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                    if (result == null) {
+                      setState(() => error = 'Invalid Email & Password');
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -75,6 +82,14 @@ class _SignInState extends State<SignIn> {
                   "Sign In",
                   style: TextStyle(color: Colors.white),
                 ),
+              ),
+              const SizedBox(height: 12.0),
+              Text(
+                error,
+                style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w600),
               ),
             ],
           ),
