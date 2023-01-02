@@ -1,3 +1,4 @@
+import 'package:chai_shai/shared/loading.dart';
 import "package:flutter/material.dart";
 import 'package:chai_shai/services/auth.dart';
 import 'package:chai_shai/shared/constants.dart';
@@ -24,7 +25,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? const Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
