@@ -1,4 +1,5 @@
 import 'package:chai_shai/models/logged_in_user.dart';
+import 'package:chai_shai/services/database_service.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:flutter/foundation.dart';
 
@@ -43,6 +44,7 @@ class AuthService {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
+      await DatabaseService(uid: user!.uid).updateUserData('0', 'new member', 100);
       return _userFromFirebaseUser(user);
     } catch (e) {
       if (kDebugMode) {
