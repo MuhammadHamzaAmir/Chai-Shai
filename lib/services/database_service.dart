@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:chai_shai/models/logged_in_user.dart';
 import 'package:chai_shai/models/chai.dart';
 
 class DatabaseService{
@@ -30,6 +30,19 @@ class DatabaseService{
         strength: doc.get("strength") ?? 0,
       );
     }).toList();
+  }
+
+  LoggedInUserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    return LoggedInUserData(
+      uid: uid,
+      name: snapshot.get("name"),
+      sugars: snapshot.get("sugars"),
+      strength: snapshot.get("strength"),
+    );
+  }
+
+  Stream<LoggedInUserData> get userData {
+    return chaiCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 
 }
