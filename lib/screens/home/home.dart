@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
       showModalBottomSheet(context: context, builder: (context){
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-          child: SettingsForm(),
+          child: const SettingsForm(),
         );
       });
     }
@@ -29,6 +29,7 @@ class Home extends StatelessWidget {
       initialData: null,
       create: (context) => DatabaseService(uid: '').chai,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
           title: const Text("Chai Shai"),
@@ -49,7 +50,15 @@ class Home extends StatelessWidget {
             ),
           ],
         ),
-        body: const ChaiList(),
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("lib/assets/images/chai.webp"),
+              fit: BoxFit.cover,
+            ),
+          ),
+            child: const ChaiList(),
+        ),
       ),
     );
   }

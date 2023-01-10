@@ -16,9 +16,9 @@ class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String> sugars = ["0", "1", "2", "3", "4"];
 
-  String _currentName = "";
-  String _currentSugars ="0";
-  int _currentStrength = 100;
+  late String _currentName = "";
+  late String _currentSugars = "0";
+  int _currentStrength = 100 ;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,6 @@ class _SettingsFormState extends State<SettingsForm> {
         if(snapshot.hasData) {
 
           LoggedInUserData userData = snapshot.data!;
-
 
           return Form(
               key: _formKey,
@@ -48,9 +47,7 @@ class _SettingsFormState extends State<SettingsForm> {
                       hintText: "Name",
                     ),
                     validator: (val) =>
-                    val!.isEmpty
-                        ? "Please enter a name"
-                        : null,
+                    val!.isEmpty ? "Please enter a name" : null,
                     onChanged: (val) => setState(() => _currentName = val),
                   ),
                   const SizedBox(
@@ -58,7 +55,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   DropdownButtonFormField(
                     decoration: textInputDecoration,
-                    value: _currentSugars ?? userData.sugars,
+                    value: userData.sugars.isNotEmpty ? userData.sugars : _currentSugars,
                     items: sugars.map((sugar) {
                       return DropdownMenuItem(
                         value: sugar,
@@ -86,10 +83,17 @@ class _SettingsFormState extends State<SettingsForm> {
                       "Update",
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () {
-                      print(_currentName);
-                      print(_currentSugars);
-                      print(_currentStrength);
+                    onPressed: () async {
+                      if(_formKey.currentState!.validate()){
+                        final resp = await DatabaseService(uid: user.uid).updateUserData(
+                            _currentSugars ?? userData.sugars,
+                            _currentName ?? userData.name,
+                            _currentStrength ?? userData.strength
+                        );
+                        if (resp) {
+                          Navigator.of(context).pop();
+                        }
+                      }
                     },
                   ),
                 ],
